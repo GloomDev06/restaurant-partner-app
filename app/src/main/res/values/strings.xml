@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Restaurant Partner App</string>
+    <string name="registerInstruction">By clicking, I accept the <b><u>terms of service</u></b> and <b><u>privacy policy</u></b></string>
 </resources>

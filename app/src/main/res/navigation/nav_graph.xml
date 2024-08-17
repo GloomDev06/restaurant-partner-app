@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/home">
+
+
+    <fragment
+        android:id="@+id/home"
+        android:name="com.gloomdev.restaurantpartnerapp.ui.fragments.Home"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/menu"
+        android:name="com.gloomdev.restaurantpartnerapp.ui.fragments.Menu"
+        android:label="fragment_menu"
+        tools:layout="@layout/fragment_menu" />
+    <fragment
+        android:id="@+id/pastOrders"
+        android:name="com.gloomdev.restaurantpartnerapp.ui.fragments.PastOrders"
+        android:label="fragment_past_orders"
+        tools:layout="@layout/fragment_past_orders" />
+
+</navigation>

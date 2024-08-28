@@ -7,14 +7,14 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.gloomdev.restaurantpartnerapp.databinding.ActivityRegisterBinding
+import com.gloomdev.restaurantpartnerapp.R
+import com.gloomdev.restaurantpartnerapp.databinding.ActivityLoginBinding
 
-
-class RegisterActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityRegisterBinding
+class LoginActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityLoginBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityRegisterBinding.inflate(layoutInflater)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         //Removing Action Bar
         window.setFlags(
@@ -22,15 +22,16 @@ class RegisterActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
 
-        binding.registerButton.setOnClickListener {
+        binding.loginButton.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
 
-        binding.loginToExistingAccount.setOnClickListener {
-            val intent = Intent(this, LoginActivity::class.java)
+        binding.createNewAccount.setOnClickListener {
+            val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
             finish()
         }
+
     }
 }

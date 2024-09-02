@@ -5,12 +5,11 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragments.Home">
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview"
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/each_order"
-        />
+        android:text="Home fragment"
+        android:gravity="center"/>
 
 </FrameLayout>

@@ -10,7 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.7"
+        android:layout_weight="0.8"
         android:background="@drawable/background"
         android:orientation="vertical">
 
@@ -20,46 +20,138 @@
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="300sp"
-                android:layout_height="300sp"
-                android:layout_marginTop="50dp"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                app:layout_constraintBottom_toTopOf="@+id/textView2"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"
                 app:srcCompat="@drawable/register_icon" />
-
-            <EditText
-                android:id="@+id/phoneEditTxt"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:background="@drawable/background_edittext"
-                android:ems="10"
-                android:hint="Phone No."
-                android:inputType="phone"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:textColor="#ffffff"
-                android:textColorHint="#ffffff"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/textView2"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/textView2"
-                app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="64dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="64dp"
-                android:text="Enter your mobile number to get OTP"
-                android:textSize="30sp"
+                android:layout_marginStart="64dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="64dp"
+                android:text="@string/registerInstructions"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="24sp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/location"
                 app:layout_constraintEnd_toEndOf="parent"
-
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/location"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="32dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                app:endIconDrawable="@drawable/arrow_down"
+                app:endIconTint="@color/white"
+                android:background="@drawable/background_edittext"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
+                app:layout_constraintBottom_toTopOf="@+id/nameOfOwner"
+                app:layout_constraintEnd_toEndOf="@+id/textView2"
+                app:layout_constraintStart_toStartOf="@+id/textView2"
+                app:layout_constraintTop_toBottomOf="@+id/textView2" >
+
+                <AutoCompleteTextView
+                    android:id="@+id/listOfLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Choose Location"
+                    android:inputType="none"
+                    android:textColor="@color/white"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <EditText
+                android:id="@+id/nameOfOwner"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="16dp"
+                android:autofillHints="name"
+                android:background="@drawable/background_edittext"
+                android:ems="10"
+                android:hint="Name Of Owner"
+                android:inputType="text"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:textColor="#ffffff"
+                android:textColorHint="#ffffff"
+                app:layout_constraintBottom_toTopOf="@+id/nameOfRestaurant"
+                app:layout_constraintEnd_toEndOf="@+id/location"
+                app:layout_constraintStart_toStartOf="@+id/location"
+                app:layout_constraintTop_toBottomOf="@+id/location" />
+
+            <EditText
+                android:id="@+id/nameOfRestaurant"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="16dp"
+                android:autofillHints="emailAddress"
+                android:background="@drawable/background_edittext"
+                android:ems="10"
+                android:hint="Name Of Restaurant"
+                android:inputType="text"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:textColor="#ffffff"
+                android:textColorHint="#ffffff"
+                app:layout_constraintBottom_toTopOf="@+id/email"
+                app:layout_constraintEnd_toEndOf="@+id/location"
+                app:layout_constraintStart_toStartOf="@+id/location"
+                app:layout_constraintTop_toBottomOf="@+id/nameOfOwner" />
+
+            <EditText
+                android:id="@+id/email"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="16dp"
+                android:autofillHints="password"
+                android:background="@drawable/background_edittext"
+                android:ems="10"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:textColor="#ffffff"
+                android:textColorHint="#ffffff"
+                app:layout_constraintBottom_toTopOf="@+id/password"
+                app:layout_constraintEnd_toEndOf="@+id/location"
+                app:layout_constraintStart_toStartOf="@+id/location"
+                app:layout_constraintTop_toBottomOf="@+id/nameOfRestaurant" />
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="16dp"
+                android:autofillHints="password"
+                android:background="@drawable/background_edittext"
+                android:ems="10"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:textColor="#ffffff"
+                android:textColorHint="#ffffff"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/location"
+                app:layout_constraintStart_toStartOf="@+id/location"
+                app:layout_constraintTop_toBottomOf="@+id/email" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
@@ -77,17 +169,30 @@
             android:layout_marginLeft="64dp"
             android:layout_marginRight="64dp"
             android:background="@drawable/background_btn"
-            android:text="Get OTP"
+            android:text="@string/register"
             android:textColor="#ffffff"
             android:textSize="18sp" />
         <TextView
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textAlignment="center"
             android:layout_marginLeft="64dp"
             android:layout_marginRight="64dp"
             android:textSize="14sp"
             android:text="@string/registerInstruction"
+            />
+
+        <TextView
+            android:id="@+id/loginToExistingAccount"
+            android:layout_marginTop="36dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:layout_marginLeft="64dp"
+            android:layout_marginRight="64dp"
+            android:textSize="14sp"
+            android:text="@string/already_have_an_account_login"
             />
 
     </LinearLayout>

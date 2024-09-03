@@ -13,6 +13,9 @@
         android:theme="@style/Theme.RestaurantPartnerApp"
         tools:targetApi="31">
         <activity
+            android:name=".ui.activities.PendingOrder"
+            android:exported="false" />
+        <activity
             android:name=".ui.activities.LoginActivity"
             android:exported="false" />
         <activity

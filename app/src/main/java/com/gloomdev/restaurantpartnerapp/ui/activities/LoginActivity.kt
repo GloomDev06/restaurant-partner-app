@@ -25,6 +25,19 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var database: DatabaseReference
 
     private lateinit var binding: ActivityLoginBinding
+
+    //check if user already signed in
+    override fun onStart() {
+        super.onStart()
+
+        val currentUser = auth.currentUser
+        if(currentUser!=null) {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)

@@ -42,7 +42,7 @@
                     android:background="#4CAF50"
                     android:fontFamily="@font/lexend_zetta_bold"
                     android:padding="4dp"
-                    android:text="Prepring"
+                    android:text="Preparing"
                     android:textAllCaps="true"
                     android:textColor="@color/white"
                     android:textSize="18sp"
@@ -53,7 +53,6 @@
                     android:id="@+id/textView11"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="52dp"
                     android:layout_marginTop="10dp"
                     android:gravity="center"
                     android:text="Driver arriving in "
@@ -61,15 +60,13 @@
                     app:layout_constraintEnd_toStartOf="@+id/time"
                     app:layout_constraintHorizontal_bias="0.416"
                     app:layout_constraintStart_toEndOf="@+id/textView4"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.666" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:layout_marginEnd="16dp"
                     android:gravity="center"
                     android:text="5:25 Min"
                     android:textColor="@color/darkgreen"

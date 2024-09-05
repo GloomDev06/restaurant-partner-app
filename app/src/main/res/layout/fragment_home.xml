@@ -149,7 +149,7 @@
         android:outlineSpotShadowColor="@color/black"
         app:cardBackgroundColor="#F1FFE0"
         app:cardCornerRadius="15dp"
-        app:layout_constraintEnd_toStartOf="@+id/cardViewTwo"
+        app:layout_constraintEnd_toStartOf="@+id/allItemMenu"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView">
@@ -260,7 +260,7 @@
 
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardViewTwo"
+        android:id="@+id/allItemMenu"
         android:layout_width="150dp"
         android:layout_height="100dp"
         android:outlineSpotShadowColor="@color/black"
@@ -306,9 +306,9 @@
         android:outlineSpotShadowColor="@color/black"
         app:cardBackgroundColor="#F1FFE0"
         app:cardCornerRadius="15dp"
-        app:layout_constraintEnd_toEndOf="@+id/cardViewTwo"
-        app:layout_constraintStart_toStartOf="@+id/cardViewTwo"
-        app:layout_constraintTop_toBottomOf="@+id/cardViewTwo">
+        app:layout_constraintEnd_toEndOf="@+id/allItemMenu"
+        app:layout_constraintStart_toStartOf="@+id/allItemMenu"
+        app:layout_constraintTop_toBottomOf="@+id/allItemMenu">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

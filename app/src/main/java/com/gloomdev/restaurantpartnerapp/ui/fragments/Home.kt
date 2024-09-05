@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.gloomdev.restaurantpartnerapp.databinding.FragmentHomeBinding
 import com.gloomdev.restaurantpartnerapp.ui.activities.AddMenuActivity
+import com.gloomdev.restaurantpartnerapp.ui.activities.AllItemActivity
 
 class Home : Fragment() {
     private lateinit var binding: FragmentHomeBinding
@@ -24,6 +25,11 @@ class Home : Fragment() {
 
         binding.addMenu.setOnClickListener {
             val intent = Intent(requireContext(), AddMenuActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.allItemMenu.setOnClickListener{
+            val intent = Intent(requireContext(), AllItemActivity::class.java)
             startActivity(intent)
         }
     }

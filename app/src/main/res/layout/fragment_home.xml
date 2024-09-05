@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/cardViewSix"
+    android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -142,7 +142,7 @@
 
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardViewOne"
+        android:id="@+id/addMenu"
         android:layout_width="150dp"
         android:layout_height="100dp"
         android:layout_marginTop="32dp"
@@ -189,8 +189,8 @@
         android:outlineSpotShadowColor="@color/black"
         app:cardBackgroundColor="#F1FFE0"
         app:cardCornerRadius="15dp"
-        app:layout_constraintStart_toStartOf="@+id/cardViewOne"
-        app:layout_constraintTop_toBottomOf="@+id/cardViewOne">
+        app:layout_constraintStart_toStartOf="@+id/addMenu"
+        app:layout_constraintTop_toBottomOf="@+id/addMenu">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -268,8 +268,8 @@
         app:cardCornerRadius="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/cardViewOne"
-        app:layout_constraintTop_toTopOf="@+id/cardViewOne">
+        app:layout_constraintStart_toEndOf="@+id/addMenu"
+        app:layout_constraintTop_toTopOf="@+id/addMenu">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -338,7 +338,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@id/cardViewSix"
+        android:id="@+id/cardViewSix"
         android:layout_width="150dp"
         android:layout_height="100dp"
         android:layout_marginTop="20dp"

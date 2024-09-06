@@ -3,6 +3,7 @@ package com.gloomdev.restaurantpartnerapp.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.gloomdev.restaurantpartnerapp.databinding.ItemItemsBinding
 
 class AddItemAdapter(private val menuItemName: ArrayList<String>, private val menuItemPrice: ArrayList<String>, private val menuItemImage: ArrayList<Int>): RecyclerView.Adapter<AddItemAdapter.AddAllItemViewHolder>() {
@@ -24,7 +25,8 @@ class AddItemAdapter(private val menuItemName: ArrayList<String>, private val me
                 val quanity = itemQuantities[position]
                 foodNameTextView.text = menuItemName[position]
                 foodPriceTextView.text = menuItemPrice[position]
-                foodImageView.setImageResource(menuItemImage[position])
+                Glide.with(itemView.context).load(menuItemImage[position]).into(foodImageView)
+//                foodImageView.setImageResource(menuItemImage[position])
                 quantityTextView.text = quanity.toString()
 
                 minusBtn.setOnClickListener {

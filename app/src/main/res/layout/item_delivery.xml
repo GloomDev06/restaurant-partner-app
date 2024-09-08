@@ -83,7 +83,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginTop="8dp"
-                android:backgroundTint="@color/darkgreen"
+                android:backgroundTint="@color/darkGreen"
                 app:cardCornerRadius="22dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/textView2"

@@ -1,16 +1,27 @@
 package com.gloomdev.restaurantpartnerapp.ui.activities
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gloomdev.restaurantpartnerapp.R
-import com.gloomdev.restaurantpartnerapp.adapters.AddItemAdapter
+import com.gloomdev.restaurantpartnerapp.adapters.MenuItemAdapter
 import com.gloomdev.restaurantpartnerapp.databinding.ActivityAllItemBinding
+import com.gloomdev.restaurantpartnerapp.models.AllMenu
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class AllItemActivity : AppCompatActivity() {
+    private lateinit var databaseReference: DatabaseReference
+    private lateinit var database: FirebaseDatabase
+    private var menuItems : ArrayList<AllMenu> = ArrayList()
+
     private val binding: ActivityAllItemBinding by lazy {
         ActivityAllItemBinding.inflate(layoutInflater)
     }
@@ -24,15 +35,37 @@ class AllItemActivity : AppCompatActivity() {
             insets
         }
 
+        databaseReference = FirebaseDatabase.getInstance().reference
+        retrieveMenuItem()
+
         binding.backbutton.setOnClickListener {
             finish()
         }
+    }
 
-        val menuFoodName = listOf("Burger", "Pizza", "Pasta", "Salad", "Ice Cream")
-        val menuFoodPrice = listOf("$5", "$10", "$15", "$20", "$25")
-        val menuFoodImage = listOf(R.drawable.sample_food, R.drawable.sample_food, R.drawable.sample_food, R.drawable.sample_food, R.drawable.sample_food)
+    private fun retrieveMenuItem() {
+        database = FirebaseDatabase.getInstance()
+        val foodRef: DatabaseReference = database.reference.child("menu")
+        foodRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                menuItems.clear()
+                for (foodSnapshot in snapshot.children) {
+                    val menuItem = foodSnapshot.getValue(AllMenu::class.java)
+                    menuItem?.let {
+                        menuItems.add(it)
+                    }
+                }
+                setAdapter()
+            }
 
-        val adapter = AddItemAdapter(ArrayList(menuFoodName), ArrayList(menuFoodPrice), ArrayList(menuFoodImage))
+            override fun onCancelled(error: DatabaseError) {
+                Log.d("DatabaseError", "onCancelled: ${error.message}")
+            }
+        })
+    }
+
+    private fun setAdapter() {
+        val adapter = MenuItemAdapter(this, menuItems, databaseReference)
         binding.menuRV.layoutManager = LinearLayoutManager(this)
         binding.menuRV.adapter = adapter
     }

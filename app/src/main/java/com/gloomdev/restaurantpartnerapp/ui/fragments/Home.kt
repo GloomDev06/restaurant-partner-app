@@ -1,15 +1,14 @@
 package com.gloomdev.restaurantpartnerapp.ui.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.gloomdev.restaurantpartnerapp.R
+import com.gloomdev.restaurantpartnerapp.adapters.PendingOrderAdapter
 import com.gloomdev.restaurantpartnerapp.databinding.FragmentHomeBinding
-import com.gloomdev.restaurantpartnerapp.ui.activities.AddMenuActivity
-import com.gloomdev.restaurantpartnerapp.ui.activities.AllItemActivity
-import com.gloomdev.restaurantpartnerapp.ui.activities.OutForDeliveryActivity
 
 class Home : Fragment() {
     private lateinit var binding: FragmentHomeBinding
@@ -24,19 +23,29 @@ class Home : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.addMenu.setOnClickListener {
-            val intent = Intent(requireContext(), AddMenuActivity::class.java)
-            startActivity(intent)
-        }
+        val orderedCustomerNames = arrayListOf(
+            "John Doe",
+            "Jane Smith",
+            "Bob Johnson",
+            "Alice Brown"
+        )
 
-        binding.allItemMenu.setOnClickListener{
-            val intent = Intent(requireContext(), AllItemActivity::class.java)
-            startActivity(intent)
-        }
+        val orderedQuantity = arrayListOf(
+            "5",
+            "3",
+            "8",
+            "2"
+        )
 
-        binding.outForDelivery.setOnClickListener{
-            val intent = Intent(requireContext(), OutForDeliveryActivity::class.java)
-            startActivity(intent)
-        }
+        val foodImage = arrayListOf(
+            R.drawable.sample_food,
+            R.drawable.sample_food,
+            R.drawable.sample_food,
+            R.drawable.sample_food
+        )
+
+        val adapter = PendingOrderAdapter(orderedCustomerNames, orderedQuantity, foodImage, requireContext())
+        binding.pendingOrdersRV.adapter = adapter
+        binding.pendingOrdersRV.layoutManager = LinearLayoutManager(requireContext())
     }
 }

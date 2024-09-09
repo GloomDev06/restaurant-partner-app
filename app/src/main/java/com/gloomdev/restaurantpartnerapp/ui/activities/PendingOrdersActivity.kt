@@ -8,13 +8,13 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gloomdev.restaurantpartnerapp.R
 import com.gloomdev.restaurantpartnerapp.adapters.DeliveryAdapter
-import com.gloomdev.restaurantpartnerapp.databinding.ActivityOutForDeliveryBinding
+import com.gloomdev.restaurantpartnerapp.adapters.PendingOrderAdapter
+import com.gloomdev.restaurantpartnerapp.databinding.ActivityPendingOrdersBinding
 
-class OutForDeliveryActivity : AppCompatActivity() {
-    private val binding: ActivityOutForDeliveryBinding by lazy {
-        ActivityOutForDeliveryBinding.inflate(layoutInflater)
+class PendingOrdersActivity : AppCompatActivity() {
+    private val binding : ActivityPendingOrdersBinding by lazy {
+        ActivityPendingOrdersBinding.inflate(layoutInflater)
     }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -25,26 +25,32 @@ class OutForDeliveryActivity : AppCompatActivity() {
             insets
         }
 
-        val customerNames = arrayListOf(
+        val orderedCustomerNames = arrayListOf(
             "John Doe",
             "Jane Smith",
             "Bob Johnson",
             "Alice Brown"
         )
 
-        val moneyStatus = arrayListOf(
-            "Not Yet Received",
-            "Received",
-            "Pending",
-            "Received"
+        val orderedQuantity = arrayListOf(
+            "5",
+            "3",
+            "8",
+            "2"
         )
 
-        val adapter = DeliveryAdapter(customerNames, moneyStatus)
-        binding.deliveryRV.adapter = adapter
-        binding.deliveryRV.layoutManager = LinearLayoutManager(this)
+        val foodImage = arrayListOf(
+            R.drawable.sample_food,
+            R.drawable.sample_food,
+            R.drawable.sample_food,
+            R.drawable.sample_food
+        )
+
+        val adapter = PendingOrderAdapter(orderedCustomerNames, orderedQuantity, foodImage, this)
+        binding.pendingOrdersRV.adapter = adapter
+        binding.pendingOrdersRV.layoutManager = LinearLayoutManager(this)
         binding.backbutton.setOnClickListener {
             finish()
         }
-
     }
 }

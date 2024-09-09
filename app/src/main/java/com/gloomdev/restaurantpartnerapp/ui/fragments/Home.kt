@@ -10,6 +10,7 @@ import com.gloomdev.restaurantpartnerapp.databinding.FragmentHomeBinding
 import com.gloomdev.restaurantpartnerapp.ui.activities.AddMenuActivity
 import com.gloomdev.restaurantpartnerapp.ui.activities.AllItemActivity
 import com.gloomdev.restaurantpartnerapp.ui.activities.OutForDeliveryActivity
+import com.gloomdev.restaurantpartnerapp.ui.activities.PendingOrdersActivity
 
 class Home : Fragment() {
     private lateinit var binding: FragmentHomeBinding
@@ -36,6 +37,11 @@ class Home : Fragment() {
 
         binding.outForDelivery.setOnClickListener{
             val intent = Intent(requireContext(), OutForDeliveryActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.pendingOrders.setOnClickListener{
+            val intent = Intent(requireContext(), PendingOrdersActivity::class.java)
             startActivity(intent)
         }
     }

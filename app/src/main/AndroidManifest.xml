@@ -13,15 +13,6 @@
         android:theme="@style/Theme.RestaurantPartnerApp"
         tools:targetApi="31">
         <activity
-            android:name=".ui.activities.PendingOrdersActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.activities.OutForDeliveryActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.activities.AllItemActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.activities.AddMenuActivity"
             android:exported="false" />
         <activity

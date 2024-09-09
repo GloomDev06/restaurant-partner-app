@@ -66,7 +66,7 @@
                 android:layout_marginStart="16dp"
                 android:fontFamily="@font/inter_bold"
                 android:text="$ 10"
-                android:textColor="@color/darkgreen"
+                android:textColor="@color/darkGreen"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/cardView3"

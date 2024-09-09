@@ -69,7 +69,7 @@
                     android:layout_marginTop="10dp"
                     android:gravity="center"
                     android:text="5:25 Min"
-                    android:textColor="@color/darkgreen"
+                    android:textColor="@color/darkGreen"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"

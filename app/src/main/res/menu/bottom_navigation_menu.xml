@@ -12,10 +12,10 @@
         android:icon="@drawable/menu"
         android:title="Menu"/>
     <item
-        android:id="@+id/pastOrders"
+        android:id="@+id/orderDispatch"
         android:enabled="true"
         android:icon="@drawable/past_orders"
-        android:title="Past Orders"/>
+        android:title="Order Dispatch"/>
 
     <item
         android:id="@+id/profile"

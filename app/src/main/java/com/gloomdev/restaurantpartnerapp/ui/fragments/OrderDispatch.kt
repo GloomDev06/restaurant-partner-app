@@ -1,24 +1,22 @@
 package com.gloomdev.restaurantpartnerapp.ui.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.gloomdev.restaurantpartnerapp.R
 import com.gloomdev.restaurantpartnerapp.adapters.DeliveryAdapter
-import com.gloomdev.restaurantpartnerapp.databinding.FragmentHomeBinding
-import com.gloomdev.restaurantpartnerapp.databinding.FragmentPastOrdersBinding
+import com.gloomdev.restaurantpartnerapp.databinding.FragmentOrderDispatchBinding
 
-class PastOrders : Fragment() {
-    private lateinit var binding: FragmentPastOrdersBinding
+class OrderDispatch : Fragment() {
+    private lateinit var binding: FragmentOrderDispatchBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentPastOrdersBinding.inflate(layoutInflater, container, false)
+        binding = FragmentOrderDispatchBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 

@@ -1,6 +1,7 @@
 package com.gloomdev.restaurantpartnerapp.adapters
 
 import android.content.Context
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
@@ -9,11 +10,17 @@ import com.bumptech.glide.Glide
 import com.gloomdev.restaurantpartnerapp.databinding.ItemPendingOrdersBinding
 
 class PendingOrderAdapter(
-    private val customerNames: ArrayList<String>,
-    private val quantity: ArrayList<String>,
-    private val foodImage: ArrayList<Int>,
-    private val context: Context
+    private val context: Context,
+    private val customerNames: MutableList<String>,
+    private val quantity: MutableList<String>,
+    private val foodImage: MutableList<String>,
+    private val itemClicked: OnItemClicked
 ) : RecyclerView.Adapter<PendingOrderAdapter.PendingOrderViewHolder>() {
+
+    interface OnItemClicked {
+        fun onItemClickListener(position: Int)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PendingOrderViewHolder {
         val binding =
             ItemPendingOrdersBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -33,13 +40,15 @@ class PendingOrderAdapter(
             binding.apply {
                 customerNameTextView.text = customerNames[position]
                 quantityTextView.text = quantity[position]
-                Glide.with(context).load(foodImage[position]).into(orderedFoodItemImageView)
+                val uriString = foodImage[position]
+                val uri = Uri.parse(uriString)
+                Glide.with(context).load(uri).into(orderedFoodItemImageView)
 
                 orderAcceptBtn.apply {
-                    if (!isAccepted) {
-                        text = "Accept"
+                    text = if (!isAccepted) {
+                        "Accept"
                     } else {
-                        text = "Dispatch"
+                        "Dispatch"
                     }
                     setOnClickListener {
                         if (!isAccepted) {
@@ -52,6 +61,9 @@ class PendingOrderAdapter(
                             showToast("Order Dispatched")
                         }
                     }
+                }
+                itemView.setOnClickListener {
+                    itemClicked.onItemClickListener(position)
                 }
             }
         }

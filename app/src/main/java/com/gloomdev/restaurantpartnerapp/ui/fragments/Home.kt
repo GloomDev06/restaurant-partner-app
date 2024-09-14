@@ -13,6 +13,7 @@ import com.gloomdev.restaurantpartnerapp.adapters.PendingOrderAdapter
 import com.gloomdev.restaurantpartnerapp.databinding.FragmentHomeBinding
 import com.gloomdev.restaurantpartnerapp.models.OrderDetails
 import com.gloomdev.restaurantpartnerapp.ui.activities.OrderDetailsActivity
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -27,6 +28,7 @@ class Home : Fragment(), PendingOrderAdapter.OnItemClicked {
     private var listOfOrderItem: ArrayList<OrderDetails> = arrayListOf()
     private lateinit var database: FirebaseDatabase
     private lateinit var databaseOrderDetails: DatabaseReference
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,6 +45,63 @@ class Home : Fragment(), PendingOrderAdapter.OnItemClicked {
         databaseOrderDetails = database.reference.child("OrderDetails")
 
         getOrdersDetails()
+        pendingOrders()
+        completedOrders()
+        wholeTimeEarning()
+    }
+
+    private fun wholeTimeEarning() {
+        val wholeTimeEarningReference = database.reference.child("CompletedOrder")
+        var listOfTotalPay = mutableListOf<Int>()
+        wholeTimeEarningReference.addListenerForSingleValueEvent(object :ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (orderSnapshot in snapshot.children) {
+                    var completeOrder = orderSnapshot.getValue(OrderDetails::class.java)
+                    completeOrder?.totalPrice?.replace("₹", "")?.toIntOrNull()
+                        ?.let { i->
+                            listOfTotalPay.add(i)
+                        }
+                }
+                binding.wholeTimeEarnings.text = "₹" + listOfTotalPay.sum().toString()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
+
+    private fun completedOrders() {
+        val completedOrderReference = database.reference.child("CompletedOrder")
+        var completedOrderItemCount = 0
+        completedOrderReference.addListenerForSingleValueEvent(object :ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                completedOrderItemCount = snapshot.childrenCount.toInt()
+                binding.completedOrders.text = completedOrderItemCount.toString()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
+
+    private fun pendingOrders() {
+        val pendingOrderReference = database.reference.child("OrderDetails")
+        var pendingOrderItemCount = 0
+        pendingOrderReference.addListenerForSingleValueEvent(object :ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                pendingOrderItemCount = snapshot.childrenCount.toInt()
+                binding.pendingOrders.text = pendingOrderItemCount.toString()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
     }
 
     private fun getOrdersDetails() {

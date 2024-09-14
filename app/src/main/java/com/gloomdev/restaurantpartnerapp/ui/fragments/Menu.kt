@@ -14,6 +14,7 @@ import com.gloomdev.restaurantpartnerapp.databinding.FragmentHomeBinding
 import com.gloomdev.restaurantpartnerapp.databinding.FragmentMenuBinding
 import com.gloomdev.restaurantpartnerapp.models.AllMenu
 import com.gloomdev.restaurantpartnerapp.ui.activities.AddMenuActivity
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -46,8 +47,9 @@ class Menu : Fragment() {
     }
 
     private fun retrieveMenuItem() {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
         database = FirebaseDatabase.getInstance()
-        val foodRef: DatabaseReference = database.reference.child("menu")
+        val foodRef: DatabaseReference = database.reference.child("menu").child(userId.toString())
         foodRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 menuItems.clear()

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.gloomdev.restaurantpartnerapp.databinding.ItemDeliveryBinding
 
-class DeliveryAdapter(private val customerNames: ArrayList<String>, private val moneyStatus: ArrayList<String>) : RecyclerView.Adapter<DeliveryAdapter.DeliveryViewHolder>() {
+class DeliveryAdapter(private val customerNames: MutableList<String>, private val moneyStatus: MutableList<Boolean>) : RecyclerView.Adapter<DeliveryAdapter.DeliveryViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DeliveryViewHolder {
         val binding = ItemDeliveryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return DeliveryViewHolder(binding)
@@ -23,12 +23,15 @@ class DeliveryAdapter(private val customerNames: ArrayList<String>, private val 
         fun bind(position: Int) {
             binding.apply {
                 customerName.text = customerNames[position]
-                statusMoney.text = moneyStatus[position]
+                if (moneyStatus[position]) {
+                    statusMoney.text = "Received"
+                } else {
+                    statusMoney.text = "Not Yet Received"
+                }
 
                 val colorMap = mapOf(
-                    "Not Yet Received" to Color.RED,
-                    "Received" to Color.GREEN,
-                    "Pending" to Color.GRAY
+                    false to Color.RED,
+                    true to Color.GREEN
                 )
 
                 statusMoney.setTextColor(colorMap[moneyStatus[position]]?: Color.BLACK)

@@ -18,6 +18,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 
 class AddMenuActivity : AppCompatActivity() {
+    private lateinit var userId: String
     private lateinit var foodName: String
     private lateinit var foodPrice: String
     private lateinit var foodDescription: String
@@ -66,7 +67,9 @@ class AddMenuActivity : AppCompatActivity() {
     }
 
     private fun uploadData() {
-        val menuRef = database.getReference("menu")
+        userId = auth.currentUser?.uid ?: ""
+
+        val menuRef = database.getReference("menu").child(userId)
         val newItemKey = menuRef.push().key
 
         if (foodImage != null) {
@@ -76,7 +79,7 @@ class AddMenuActivity : AppCompatActivity() {
 
             uploadTask.addOnSuccessListener {
                 imageRef.downloadUrl.addOnSuccessListener { downloadUrl ->
-                    val newMenu = AllMenu(foodName, foodPrice, foodDescription, downloadUrl.toString())
+                    val newMenu = AllMenu(newItemKey, foodName, foodPrice, foodDescription, downloadUrl.toString())
                     newItemKey?.let { key->
                         menuRef.child(key).setValue(newMenu).addOnSuccessListener {
                             Toast.makeText(this, "Data Upload Successful", Toast.LENGTH_SHORT).show()

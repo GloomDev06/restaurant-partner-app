@@ -51,6 +51,9 @@ class LoginActivity : AppCompatActivity() {
         auth = Firebase.auth
         database = Firebase.database.reference
 
+        binding.email.setText(getString(R.string.guestLoginEmail))
+        binding.password.setText(getString(R.string.guestLoginPassword))
+
         binding.loginButton.setOnClickListener {
             email = binding.email.text.toString().trim()
             password = binding.password.text.toString().trim()
@@ -61,12 +64,22 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
+        binding.forgotPassword.setOnClickListener {
+            if(binding.email.text.toString().trim().isBlank()) {
+                Toast.makeText(this, "Enter your email", Toast.LENGTH_SHORT).show()
+            } else {
+                auth.sendPasswordResetEmail(binding.email.text.toString().trim())
+                    .addOnSuccessListener {
+                        Toast.makeText(this, "Email sent", Toast.LENGTH_SHORT).show()
+                    }
+            }
+        }
+
         binding.createNewAccount.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
             finish()
         }
-
     }
 
     // user logging in
@@ -78,7 +91,7 @@ class LoginActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             } else {
-                Toast.makeText(this, "$task.exception", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "${task.exception!!.message}", Toast.LENGTH_SHORT).show()
                 Log.d("Account", "loginUser: Failed", task.exception)
             }
         }

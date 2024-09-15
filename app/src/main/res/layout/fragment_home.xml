@@ -36,7 +36,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/pendingOrders"
+                android:id="@+id/textView121"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter_semibold"
@@ -50,16 +50,16 @@
                 app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
             <TextView
-                android:id="@+id/textView5"
+                android:id="@+id/pendingOrders"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="30"
+                android:text="0"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/pendingOrders"
-                app:layout_constraintStart_toStartOf="@+id/pendingOrders"
-                app:layout_constraintTop_toBottomOf="@+id/pendingOrders" />
+                app:layout_constraintEnd_toEndOf="@+id/textView121"
+                app:layout_constraintStart_toStartOf="@+id/textView121"
+                app:layout_constraintTop_toBottomOf="@+id/textView121" />
 
             <ImageView
                 android:id="@+id/imageView3"
@@ -82,17 +82,17 @@
                 android:textColor="@color/lightGreen"
                 android:textSize="16sp"
                 android:textStyle="normal"
-                app:layout_constraintBottom_toTopOf="@+id/textView5"
+                app:layout_constraintBottom_toTopOf="@+id/pendingOrders"
                 app:layout_constraintEnd_toEndOf="@+id/imageView3"
                 app:layout_constraintHorizontal_bias="0.525"
                 app:layout_constraintStart_toStartOf="@+id/imageView3"
                 app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
             <TextView
-                android:id="@+id/textView7"
+                android:id="@+id/completedOrders"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="10"
+                android:text="0"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -121,16 +121,17 @@
                 android:textColor="@color/lightGreen"
                 android:textSize="16sp"
                 android:textStyle="normal"
-                app:layout_constraintBottom_toTopOf="@+id/textView7"
+                app:layout_constraintBottom_toTopOf="@+id/completedOrders"
                 app:layout_constraintEnd_toEndOf="@+id/imageView4"
                 app:layout_constraintHorizontal_bias="0.505"
                 app:layout_constraintStart_toStartOf="@+id/imageView4"
                 app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
             <TextView
+                android:id="@+id/wholeTimeEarnings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="30$"
+                android:text="₹0"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold"

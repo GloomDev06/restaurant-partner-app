@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gloomdev.restaurantpartnerapp.R
 import com.gloomdev.restaurantpartnerapp.adapters.MenuItemAdapter
@@ -14,6 +15,7 @@ import com.gloomdev.restaurantpartnerapp.databinding.FragmentHomeBinding
 import com.gloomdev.restaurantpartnerapp.databinding.FragmentMenuBinding
 import com.gloomdev.restaurantpartnerapp.models.AllMenu
 import com.gloomdev.restaurantpartnerapp.ui.activities.AddMenuActivity
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -46,8 +48,9 @@ class Menu : Fragment() {
     }
 
     private fun retrieveMenuItem() {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
         database = FirebaseDatabase.getInstance()
-        val foodRef: DatabaseReference = database.reference.child("menu")
+        val foodRef: DatabaseReference = database.reference.child("menu").child(userId.toString())
         foodRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 menuItems.clear()
@@ -67,8 +70,26 @@ class Menu : Fragment() {
     }
 
     private fun setAdapter() {
-        val adapter = MenuItemAdapter(requireContext(), menuItems, databaseReference)
+        val adapter = MenuItemAdapter(requireContext(), menuItems, databaseReference) { position ->
+            deleteMenuItems(position)
+        }
         binding.menuRV.layoutManager = LinearLayoutManager(requireContext())
         binding.menuRV.adapter = adapter
+    }
+
+    private fun deleteMenuItems(position: Int) {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
+        val menuItemToDelete = menuItems[position]
+        val menuItemKey = menuItemToDelete.key
+        val menuRef = database.reference.child("menu").child(userId.toString()).child(menuItemKey!!)
+        menuRef.removeValue().addOnCompleteListener { task ->
+            if(task.isSuccessful) {
+                menuItems.removeAt(position)
+                binding.menuRV.adapter?.notifyItemRemoved(position)
+                Toast.makeText(requireContext(), "Item was deleted", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(requireContext(), "Item couldn't be deleted", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 }

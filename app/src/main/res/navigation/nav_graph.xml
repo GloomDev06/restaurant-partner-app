@@ -17,10 +17,10 @@
         android:label="fragment_menu"
         tools:layout="@layout/fragment_menu" />
     <fragment
-        android:id="@+id/pastOrders"
-        android:name="com.gloomdev.restaurantpartnerapp.ui.fragments.PastOrders"
+        android:id="@+id/orderDispatch"
+        android:name="com.gloomdev.restaurantpartnerapp.ui.fragments.OrderDispatch"
         android:label="fragment_past_orders"
-        tools:layout="@layout/fragment_past_orders" />
+        tools:layout="@layout/fragment_order_dispatch" />
     <fragment
         android:id="@+id/profile"
         android:name="com.gloomdev.restaurantpartnerapp.ui.fragments.Profile"

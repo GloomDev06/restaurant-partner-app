@@ -162,7 +162,7 @@ class Profile : Fragment() {
                         val image = snapshot.child("restaurantImage").value.toString()
                         val imageUri = Uri.parse(image)
                         retrievedImage = image
-                        setDataToTextView(nameOfOwner, nameOfRestaurant, address, email, phone, description, imageUri)
+                        setDataToViews(nameOfOwner, nameOfRestaurant, address, email, phone, description, imageUri)
                     }
                 }
 
@@ -173,7 +173,7 @@ class Profile : Fragment() {
         }
     }
 
-    private fun setDataToTextView(
+    private fun setDataToViews(
         nameOfOwner: String,
         nameOfRestaurant: String,
         address: String,

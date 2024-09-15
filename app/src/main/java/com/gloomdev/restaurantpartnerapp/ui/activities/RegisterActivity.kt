@@ -23,6 +23,7 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var username: String
     private lateinit var nameOfRestaurant: String
     private lateinit var location: String
+    private lateinit var phoneNumber: String
     private lateinit var database: DatabaseReference
 
     private lateinit var binding: ActivityRegisterBinding
@@ -45,11 +46,12 @@ class RegisterActivity : AppCompatActivity() {
             email = binding.email.text.toString().trim()
             password = binding.password.text.toString().trim()
             location = binding.listOfLocation.text.toString().trim()
+            phoneNumber = "+91" + binding.phone.text.toString().trim()
 
             if(username.isBlank() || nameOfRestaurant.isBlank() || email.isBlank() || password.isBlank() || location.isBlank()) {
                 Toast.makeText(this, "Fill all credentials", Toast.LENGTH_SHORT).show()
             } else {
-                createAccount(username, nameOfRestaurant, email, password, location)
+                createAccount(username, nameOfRestaurant, email, phoneNumber, location, password)
             }
         }
 
@@ -69,12 +71,13 @@ class RegisterActivity : AppCompatActivity() {
         username: String,
         nameOfRestaurant: String,
         email: String,
-        password: String,
-        location: String
+        phoneNumber: String,
+        location: String,
+        password: String
     ) {
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
             if(task.isSuccessful) {
-                saveUserData(username, nameOfRestaurant, email, password, location)
+                saveUserData(username, nameOfRestaurant, email, phoneNumber, location)
                 Toast.makeText(this, "Account created successfully", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
@@ -91,10 +94,10 @@ class RegisterActivity : AppCompatActivity() {
         username: String,
         nameOfRestaurant: String,
         email: String,
-        password: String,
+        phoneNumber: String,
         location: String
     ) {
-        val user = UserModel(username, nameOfRestaurant, email, password, location)
+        val user = UserModel(username, nameOfRestaurant, email, phoneNumber, location)
         val userId = FirebaseAuth.getInstance().currentUser!!.uid
         database.child("user").child(userId).setValue(user)
     }

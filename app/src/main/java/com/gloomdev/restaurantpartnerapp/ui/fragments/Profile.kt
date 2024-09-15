@@ -1,14 +1,15 @@
 package com.gloomdev.restaurantpartnerapp.ui.fragments
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.gloomdev.restaurantpartnerapp.R
-import com.gloomdev.restaurantpartnerapp.databinding.FragmentHomeBinding
+import androidx.activity.result.contract.ActivityResultContracts
+import com.bumptech.glide.Glide
 import com.gloomdev.restaurantpartnerapp.databinding.FragmentProfileBinding
 import com.gloomdev.restaurantpartnerapp.models.UserModel
 import com.gloomdev.restaurantpartnerapp.ui.activities.LoginActivity
@@ -18,12 +19,15 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.storage.FirebaseStorage
 
 class Profile : Fragment() {
     private lateinit var binding: FragmentProfileBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
     private lateinit var adminReference: DatabaseReference
+    private var restaurantImage: Uri? = null
+    private var retrievedImage: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,6 +44,10 @@ class Profile : Fragment() {
         database = FirebaseDatabase.getInstance()
         adminReference = database.reference.child("user")
 
+        binding.restaurantImage.setOnClickListener {
+            pickImage.launch("image/*")
+        }
+
         binding.apply {
             nameOfOwner.isEnabled = false
             nameOfRestaurant.isEnabled = false
@@ -47,6 +55,8 @@ class Profile : Fragment() {
             email.isEnabled = false
             phone.isEnabled = false
             saveBtn.isEnabled = false
+            restaurantImage.isEnabled = false
+            descriptionOfRestaurant.isEnabled = false
 
             var isEnable = false
             editButton.setOnClickListener {
@@ -57,6 +67,8 @@ class Profile : Fragment() {
                 address.isEnabled = isEnable
 //                email.isEnabled = isEnable
                 phone.isEnabled = isEnable
+                descriptionOfRestaurant.isEnabled = isEnable
+                restaurantImage.isEnabled = isEnable
 
                 if (isEnable) {
                     nameOfOwner.requestFocus()
@@ -79,27 +91,59 @@ class Profile : Fragment() {
     }
 
     private fun updateUserData() {
+        val userId = auth.currentUser?.uid.toString()
+        val restaurantReference = adminReference.child(userId)
+        val newItemKey = restaurantReference.push().key
+
         val updatedNameOfOwner = binding.nameOfOwner.text.toString()
         val updatedNameOfRestaurant = binding.nameOfRestaurant.text.toString()
         val updatedEmail = binding.email.text.toString()
         val updatedPhone = binding.phone.text.toString()
         val updatedAddress = binding.address.text.toString()
-        val userData = UserModel(
-            updatedNameOfOwner,
-            updatedNameOfRestaurant,
-            updatedEmail,
-            updatedPhone,
-            updatedAddress
-        )
-        adminReference.child(auth.currentUser?.uid.toString()).setValue(userData).addOnSuccessListener {
-            Toast.makeText(requireContext(), "Profile updated successfully", Toast.LENGTH_SHORT)
-                .show()
-//            auth.currentUser?.updateEmail(updatedEmail)
-        }
-            .addOnFailureListener {
-                Toast.makeText(requireContext(), "Failed to update profile", Toast.LENGTH_SHORT)
-                    .show()
+        val updatedDescription = binding.descriptionOfRestaurant.text.toString()
+
+        if (restaurantImage != null) {
+            val storageRef = FirebaseStorage.getInstance().reference
+            val imageRef = storageRef.child("restaurant_images/${newItemKey}.jpg")
+            val uploadTask = imageRef.putFile(restaurantImage!!)
+
+            uploadTask.addOnSuccessListener {
+                imageRef.downloadUrl.addOnSuccessListener { downloadUrl ->
+                    val userData = UserModel(
+                        updatedNameOfOwner,
+                        updatedNameOfRestaurant,
+                        updatedEmail,
+                        updatedPhone,
+                        updatedAddress,
+                        updatedDescription,
+                        downloadUrl.toString()
+                    )
+                    restaurantReference.setValue(userData).addOnSuccessListener {
+                        Toast.makeText(requireContext(), "Profile updated successfully", Toast.LENGTH_SHORT).show()
+                    }
+                        .addOnFailureListener {
+                            Toast.makeText(requireContext(), "Failed to update profile", Toast.LENGTH_SHORT).show()
+                        }
+                }
             }
+        } else {
+            val userData = UserModel(
+                updatedNameOfOwner,
+                updatedNameOfRestaurant,
+                updatedEmail,
+                updatedPhone,
+                updatedAddress,
+                updatedDescription,
+                retrievedImage
+            )
+            restaurantReference.setValue(userData).addOnSuccessListener {
+                Toast.makeText(requireContext(), "Profile updated successfully", Toast.LENGTH_SHORT).show()
+//                      auth.currentUser?.updateEmail(updatedEmail)
+            }
+                .addOnFailureListener {
+                    Toast.makeText(requireContext(), "Failed to update profile", Toast.LENGTH_SHORT).show()
+                }
+        }
     }
 
     private fun retrieveData() {
@@ -114,7 +158,11 @@ class Profile : Fragment() {
                         val address = snapshot.child("location").value.toString()
                         val email = snapshot.child("email").value.toString()
                         val phone = snapshot.child("phone").value.toString()
-                        setDataToTextView(nameOfOwner, nameOfRestaurant, address, email, phone)
+                        val description = snapshot.child("description").value.toString()
+                        val image = snapshot.child("restaurantImage").value.toString()
+                        val imageUri = Uri.parse(image)
+                        retrievedImage = image
+                        setDataToTextView(nameOfOwner, nameOfRestaurant, address, email, phone, description, imageUri)
                     }
                 }
 
@@ -130,7 +178,9 @@ class Profile : Fragment() {
         nameOfRestaurant: String,
         address: String,
         email: String,
-        phone: String
+        phone: String,
+        description: String,
+        imageUri: Uri
     ) {
         binding.apply {
             this.nameOfOwner.setText(nameOfOwner)
@@ -138,6 +188,15 @@ class Profile : Fragment() {
             this.address.setText(address)
             this.email.setText(email)
             this.phone.setText(phone)
+            this.descriptionOfRestaurant.setText(description)
+            Glide.with(requireContext()).load(imageUri).centerCrop().into(restaurantImage)
+        }
+    }
+
+    private val pickImage = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+        if (uri != null) {
+            Glide.with(requireContext()).load(uri).centerCrop().into(binding.restaurantImage)
+            restaurantImage = uri
         }
     }
 }

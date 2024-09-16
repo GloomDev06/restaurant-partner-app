@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:fontFamily="@font/inter_bold"
-            android:text="Restaurant Profile"
+            android:text="Edit Profile"
             android:textColor="@color/black"
             android:textSize="32sp"
             app:layout_constraintEnd_toEndOf="parent"

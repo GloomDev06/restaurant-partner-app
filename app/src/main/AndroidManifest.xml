@@ -19,9 +19,6 @@
             android:name=".ui.activities.AddMenuActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activities.PendingOrder"
-            android:exported="false" />
-        <activity
             android:name=".ui.activities.LoginActivity"
             android:exported="false" />
         <activity

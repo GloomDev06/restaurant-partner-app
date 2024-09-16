@@ -62,6 +62,7 @@ dependencies {
     implementation (libs.navigation.fragment.ktx)
     implementation (libs.navigation.ui.ktx)
 
-    implementation ("com.github.bumptech.glide:glide:4.16.0")
+    implementation (libs.glide)
+    implementation (libs.lottie)
 
 }

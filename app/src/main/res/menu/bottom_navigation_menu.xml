@@ -4,22 +4,22 @@
     <item
         android:id="@+id/home"
         android:enabled="true"
-        android:icon="@drawable/home"
+        android:icon="@drawable/nav_home"
         android:title="Home"/>
     <item
         android:id="@+id/menu"
         android:enabled="true"
-        android:icon="@drawable/menu"
+        android:icon="@drawable/nav_menu"
         android:title="Menu"/>
     <item
         android:id="@+id/orderDispatch"
         android:enabled="true"
-        android:icon="@drawable/order_dispatch"
+        android:icon="@drawable/nav_order_dispatch"
         android:title="Order Dispatch"/>
 
     <item
         android:id="@+id/profile"
         android:enabled="true"
-        android:icon="@drawable/profile"
+        android:icon="@drawable/nav_profile"
         android:title="Profile"/>
 </menu>

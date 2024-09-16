@@ -1,5 +1,6 @@
 package com.gloomdev.restaurantpartnerapp.ui.activities
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -8,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.gloomdev.restaurantpartnerapp.databinding.ActivitySplashScreenBinding
 
 
+@SuppressLint("CustomSplashScreen")
 class SplashScreenActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashScreenBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,12 +28,6 @@ class SplashScreenActivity : AppCompatActivity() {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
-        }, 2550)
-
-        //Loading GIF
-        binding.webView.settings.loadWithOverviewMode = true
-        binding.webView.settings.useWideViewPort = true
-        binding.webView.loadUrl("file:///android_res/drawable/menu_splash_icon.gif")
-
+        }, 1000)
     }
 }

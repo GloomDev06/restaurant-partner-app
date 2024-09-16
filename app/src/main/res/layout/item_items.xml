@@ -74,15 +74,16 @@
 
             <ImageButton
                 android:id="@+id/deleteBtn"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:layout_marginEnd="24dp"
                 android:background="@android:color/transparent"
                 android:scaleType="centerCrop"
-                android:src="@drawable/trash"
+                android:src="@drawable/delete"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/darkGreen" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

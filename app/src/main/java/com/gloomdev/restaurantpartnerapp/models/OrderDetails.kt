@@ -17,7 +17,7 @@ class OrderDetails() : Serializable {
     var orderAccepted: Boolean = false
     var paymentReceived: Boolean = false
     var itemPushKey: String? = null
-    var currentTime: String? = null
+    var currentTime: Long = 0
 
     constructor(parcel: Parcel) : this() {
         userUid = parcel.readString()
@@ -28,7 +28,7 @@ class OrderDetails() : Serializable {
         orderAccepted = parcel.readByte() != 0.toByte()
         paymentReceived = parcel.readByte() != 0.toByte()
         itemPushKey = parcel.readString()
-        currentTime = parcel.readString()
+        currentTime = parcel.readLong()
     }
 
     companion object CREATOR : Parcelable.Creator<OrderDetails> {

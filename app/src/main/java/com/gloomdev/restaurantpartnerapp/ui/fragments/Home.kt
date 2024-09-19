@@ -56,12 +56,12 @@ class Home : Fragment(), PendingOrderAdapter.OnItemClicked {
 
     private fun wholeTimeEarning() {
         val wholeTimeEarningReference = database.reference.child("CompletedOrder").child(userId)
-        var listOfTotalPay = mutableListOf<Int>()
+        var listOfTotalPay = mutableListOf<Double>()
         wholeTimeEarningReference.addListenerForSingleValueEvent(object :ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (orderSnapshot in snapshot.children) {
                     var completeOrder = orderSnapshot.getValue(OrderDetails::class.java)
-                    completeOrder?.totalPrice?.replace("₹", "")?.toIntOrNull()
+                    completeOrder?.totalPrice?.replace("₹", "")?.toDoubleOrNull()
                         ?.let { i->
                             listOfTotalPay.add(i)
                         }

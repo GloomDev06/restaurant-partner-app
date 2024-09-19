@@ -30,6 +30,7 @@ class Home : Fragment(), PendingOrderAdapter.OnItemClicked {
     private lateinit var database: FirebaseDatabase
     private lateinit var databaseOrderDetails: DatabaseReference
     private lateinit var auth: FirebaseAuth
+    private lateinit var userId: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,8 +44,9 @@ class Home : Fragment(), PendingOrderAdapter.OnItemClicked {
         super.onViewCreated(view, savedInstanceState)
 
         auth = FirebaseAuth.getInstance()
+        userId = auth.currentUser!!.uid
         database = FirebaseDatabase.getInstance()
-        databaseOrderDetails = database.reference.child("OrderDetails").child(auth.currentUser!!.uid)
+        databaseOrderDetails = database.reference.child("OrderDetails").child(userId)
 
         getOrdersDetails()
         pendingOrders()
@@ -53,7 +55,7 @@ class Home : Fragment(), PendingOrderAdapter.OnItemClicked {
     }
 
     private fun wholeTimeEarning() {
-        val wholeTimeEarningReference = database.reference.child("CompletedOrder").child(auth.currentUser!!.uid)
+        val wholeTimeEarningReference = database.reference.child("CompletedOrder").child(userId)
         var listOfTotalPay = mutableListOf<Int>()
         wholeTimeEarningReference.addListenerForSingleValueEvent(object :ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -75,7 +77,7 @@ class Home : Fragment(), PendingOrderAdapter.OnItemClicked {
     }
 
     private fun completedOrders() {
-        val completedOrderReference = database.reference.child("CompletedOrder").child(auth.currentUser!!.uid)
+        val completedOrderReference = database.reference.child("CompletedOrder").child(userId)
         var completedOrderItemCount = 0
         completedOrderReference.addListenerForSingleValueEvent(object :ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -91,7 +93,7 @@ class Home : Fragment(), PendingOrderAdapter.OnItemClicked {
     }
 
     private fun pendingOrders() {
-        val pendingOrderReference = database.reference.child("OrderDetails").child(auth.currentUser!!.uid)
+        val pendingOrderReference = database.reference.child("OrderDetails").child(userId)
         var pendingOrderItemCount = 0
         pendingOrderReference.addListenerForSingleValueEvent(object :ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -161,7 +163,7 @@ class Home : Fragment(), PendingOrderAdapter.OnItemClicked {
         // handle item acceptation and update database
         val childItemPushKey = listOfOrderItem[position].itemPushKey
         val clickItemOrderReference = childItemPushKey?.let {
-            database.reference.child("OrderDetails").child(FirebaseAuth.getInstance().currentUser!!.uid).child(it)
+            database.reference.child("OrderDetails").child(userId).child(it)
         }
         clickItemOrderReference?.child("orderAccepted")?.setValue(true)
         updateOrderAcceptStatus(position)
@@ -170,7 +172,7 @@ class Home : Fragment(), PendingOrderAdapter.OnItemClicked {
     override fun onItemDispatchClickListener(position: Int) {
         // handle item acceptation and update database
         val dispatchItemPushKey = listOfOrderItem[position].itemPushKey
-        val dispatchItemOrderReference = database.reference.child("CompletedOrder").child(auth.currentUser!!.uid).child(dispatchItemPushKey!!)
+        val dispatchItemOrderReference = database.reference.child("CompletedOrder").child(userId).child(dispatchItemPushKey!!)
         dispatchItemOrderReference.setValue(listOfOrderItem[position])
             .addOnSuccessListener {
                 deleteThisItemFromOrderDetails(dispatchItemPushKey)
@@ -178,7 +180,7 @@ class Home : Fragment(), PendingOrderAdapter.OnItemClicked {
     }
 
     private fun deleteThisItemFromOrderDetails(dispatchItemPushKey: String) {
-        val orderDetailsItemReference = database.reference.child("OrderDetails").child(auth.currentUser!!.uid).child(dispatchItemPushKey)
+        val orderDetailsItemReference = database.reference.child("OrderDetails").child(userId).child(dispatchItemPushKey)
         orderDetailsItemReference.removeValue()
             .addOnSuccessListener {
                 Toast.makeText(requireContext(), "Order is Dispatched", Toast.LENGTH_SHORT).show()

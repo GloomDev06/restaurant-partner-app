@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.gloomdev.restaurantpartnerapp.adapters.DeliveryAdapter
 import com.gloomdev.restaurantpartnerapp.databinding.FragmentOrderDispatchBinding
 import com.gloomdev.restaurantpartnerapp.models.OrderDetails
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -17,6 +18,8 @@ import com.google.firebase.database.ValueEventListener
 class OrderDispatch : Fragment() {
     private lateinit var binding: FragmentOrderDispatchBinding
     private lateinit var database: FirebaseDatabase
+    private lateinit var auth: FirebaseAuth
+    private lateinit var userId: String
     private var listOfCompleteOrder: ArrayList<OrderDetails> = arrayListOf()
 
     override fun onCreateView(
@@ -29,13 +32,14 @@ class OrderDispatch : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        auth = FirebaseAuth.getInstance()
         retrieveCompleteOrderDetails()
     }
 
     private fun retrieveCompleteOrderDetails() {
         database = FirebaseDatabase.getInstance()
-        val completeOrderReference = database.reference.child("CompletedOrder")
+        userId = auth.currentUser!!.uid
+        val completeOrderReference = database.reference.child("CompletedOrder").child(userId)
             .orderByChild("currentTime")
         completeOrderReference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {

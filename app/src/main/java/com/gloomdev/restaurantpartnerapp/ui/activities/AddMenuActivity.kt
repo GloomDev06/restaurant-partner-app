@@ -79,7 +79,7 @@ class AddMenuActivity : AppCompatActivity() {
 
             uploadTask.addOnSuccessListener {
                 imageRef.downloadUrl.addOnSuccessListener { downloadUrl ->
-                    val newMenu = AllMenu(newItemKey, foodName, foodPrice, foodDescription, downloadUrl.toString())
+                    val newMenu = AllMenu(newItemKey, foodName, foodPrice, foodDescription, downloadUrl.toString(), userId)
                     newItemKey?.let { key->
                         menuRef.child(key).setValue(newMenu).addOnSuccessListener {
                             Toast.makeText(this, "Data Upload Successful", Toast.LENGTH_SHORT).show()

@@ -48,9 +48,9 @@ class Menu : Fragment() {
     }
 
     private fun retrieveMenuItem() {
-        val userId = FirebaseAuth.getInstance().currentUser?.uid
+        val userId = FirebaseAuth.getInstance().currentUser!!.uid
         database = FirebaseDatabase.getInstance()
-        val foodRef: DatabaseReference = database.reference.child("menu").child(userId.toString())
+        val foodRef: DatabaseReference = database.reference.child("menu").child(userId)
         foodRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 menuItems.clear()
